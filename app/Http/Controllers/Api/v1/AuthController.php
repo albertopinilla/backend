@@ -12,8 +12,6 @@ use Tymon\JWTAuth\Exceptions\TokenBlacklistedException;
 use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 use Illuminate\Support\Facades\Auth;
 
-
-
 class AuthController extends Controller
 {
     public function login(Request $request)
@@ -38,9 +36,7 @@ class AuthController extends Controller
         $token = JWTAuth::attempt($credentials);
 
         if ($token) {
-           
-            $tokena = JWTAuth::parseToken();
-
+         
             return response()->json([
                 'success' => true,
                 'user' => auth()->user(),
