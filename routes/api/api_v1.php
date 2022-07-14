@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\v1\{AuthController,UserController};
+use App\Http\Controllers\Api\v1\{AuthController,UserController,RoleController};
 
 
 /*
@@ -21,20 +21,24 @@ use App\Http\Controllers\Api\v1\{AuthController,UserController};
 // });
 
 Route::post('/auth/login', [AuthController::class, 'login']);
+Route::post('/auth/logout', [AuthController::class,'logout']);
 
+// Grupo Administrador
+Route::middleware(['auth.api','role:Administrador','jwt.auth'])->group(function () {    
 
-
-//Route::group(['middleware' => 'jwt.auth'], function () {
-Route::middleware([ 'auth.api','jwt.auth'])->group(function () {    
-
-    Route::post('/auth/logout', [AuthController::class,'logout']);
-   
     // Users
-    Route::get('/users', [UserController::class, 'users']); 
-    Route::get('/users/{id}', [UserController::class, 'show']);
-    Route::post('/users', [UserController::class, 'store']); 
-    Route::put('/users/{id}',[UserController::class,'update']);
-    Route::delete('/users/{id}',[UserController::class,'delete']);
+    Route::get('/users', [UserController::class, 'users'])->name('users.all');
+    Route::get('/users/{id}', [UserController::class, 'show'])->name('users.show');
+    Route::post('/users', [UserController::class, 'store'])->name('users.store'); 
+    Route::put('/users/{id}',[UserController::class,'update'])->name('users.update');
+    Route::delete('/users/{id}',[UserController::class,'delete'])->name('users.delete');
+
+    // Permissions
+    Route::get('/roles', [RoleController::class, 'roles'])->name('roles.all');
+    Route::get('/roles/{id}', [RoleController::class, 'show'])->name('roles.show');
+    Route::post('/roles', [RoleController::class, 'store'])->name('roles.store'); 
+    Route::put('/roles/{id}',[RoleController::class,'update'])->name('roles.update');
+    Route::delete('/roles/{id}',[RoleController::class,'delete'])->name('roles.delete');
 
 });
 

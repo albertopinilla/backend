@@ -6,59 +6,17 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Validator;
-use Illuminate\Database\QueryException;
-use JWTAuth;
-use Illuminate\Support\Facades\Input;
 
 class UserController extends Controller
 {
     public function users()
     {
-
-        $users = User::all();
-
-        return response()->json([
-            'success' => true,
-            'users' => $users
-        ], 200);
+        return User::getUsers();
     }
 
     public function store(Request $request)
     {
-
-        $user = $request->only('name', 'email', 'password', 'password_confirmation');
-
-        $validator = Validator::make($user, [
-            'name' => 'required',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|min:6',
-            'password_confirmation' => 'required_with:password|same:password|min:6'
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'success' => false,
-                'errors' => $validator->errors()
-            ], 422);
-        }
-
-        try {
-            $user = User::create([
-                'name' => $user['name'],
-                'email' => $user['email'],
-                'password' => bcrypt($user['password']),
-            ]);
-
-            return response()->json([
-                'success' => true,
-                'user' => $user,
-                'message' => 'El usuario ha sido creado satisfactoriamente.'
-            ], 201);
-        } catch (QueryException $e) {
-            return response()->json([
-                $e
-            ], 500);
-        }
+        return User::saveUser($request);
     }
 
     public function show($id)
@@ -101,13 +59,14 @@ class UserController extends Controller
 
     public function update(Request $request, $id)
     {
-        $data = $request->only('name', 'email', 'password', 'password_confirmation');
+        $data = $request->only('name', 'email', 'password', 'password_confirmation','role_id');
 
         $validator = Validator::make($data, [
             'name' => 'required',
             'email' => 'required|email|unique:users,email,' . $id,
             'password' => 'required|min:6',
-            'password_confirmation' => 'required_with:password|same:password|min:6'
+            'password_confirmation' => 'required_with:password|same:password|min:6',
+            'role_id' => 'integer|digits:1|nullable|not_in:0'
         ]);
 
         if ($validator->fails()) {
@@ -126,6 +85,9 @@ class UserController extends Controller
                 'email' => $data['email'],
                 'password' => bcrypt($data['password']),
             ]);
+
+            $user->assignRole($data['role_id']);
+
             return response()->json([
                 'success' => true,
                 'user' => $user,
