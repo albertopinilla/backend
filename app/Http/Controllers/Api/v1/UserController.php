@@ -66,7 +66,7 @@ class UserController extends Controller
             'email' => 'required|email|unique:users,email,' . $id,
             'password' => 'required|min:6',
             'password_confirmation' => 'required_with:password|same:password|min:6',
-            'role_id' => 'integer|digits:1|nullable|not_in:0'
+            'role_id' => 'integer|digits:1|not_in:0|nullable'
         ]);
 
         if ($validator->fails()) {

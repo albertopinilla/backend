@@ -15,11 +15,19 @@ class RoleSeeder extends Seeder
      */
     public function run()
     {
-        
+      
         $superadmin = Role::create(['name' => 'Administrador']);
-        Role::create(['name' => 'Vendedor']);
-        Role::create(['name' => 'Cliente']);
-
         $superadmin->givePermissionTo(Permission::all());
+
+        $vendedor = Role::create(['name' => 'Vendedor']);
+        $vendedor->givePermissionTo('products.all');
+        $vendedor->givePermissionTo('products.show');
+        $vendedor->givePermissionTo('products.store');
+        $vendedor->givePermissionTo('products.update');
+        $vendedor->givePermissionTo('products.delete');
+
+        $role = Role::create(['name' => 'Cliente']);
+
+        
     }
 }
