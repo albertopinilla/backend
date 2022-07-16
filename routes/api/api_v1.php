@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\v1\{AuthController,UserController,RoleController,ProductController};
+use App\Http\Controllers\Api\v1\{AuthController,UserController,RoleController,ProductController,BuyController};
 
 
 /*
@@ -45,18 +45,18 @@ Route::middleware(['auth.api','role:Administrador','jwt.auth'])->group(function 
 Route::middleware(['auth.api','jwt.auth'])->group(function () {    
 
     // Product
-    Route::get('/products', [ProductController::class, 'products'])->name('products.all');
-    Route::get('/products/{id}', [ProductController::class, 'show'])->name('products.show');
-    Route::post('/products', [ProductController::class, 'store'])->name('products.store'); 
-    Route::put('/products/{id}',[ProductController::class,'update'])->name('products.update');
-    Route::delete('/products/{id}',[ProductController::class,'delete'])->name('products.delete');
+    Route::get('/products', [ProductController::class, 'products'])->name('products.all')->middleware('permission:products.all');
+    Route::get('/products/{id}', [ProductController::class, 'show'])->name('products.show')->middleware('permission:products.show');
+    Route::post('/products', [ProductController::class, 'store'])->name('products.store')->middleware('permission:products.store');
+    Route::put('/products/{id}',[ProductController::class,'update'])->name('products.update')->middleware('permission:products.update');
+    Route::delete('/products/{id}',[ProductController::class,'delete'])->name('products.delete')->middleware('permission:products.delete');
 
-    // Permissions
-    // Route::get('/roles', [RoleController::class, 'roles'])->name('roles.all');
-    // Route::get('/roles/{id}', [RoleController::class, 'show'])->name('roles.show');
-    // Route::post('/roles', [RoleController::class, 'store'])->name('roles.store'); 
-    // Route::put('/roles/{id}',[RoleController::class,'update'])->name('roles.update');
-    // Route::delete('/roles/{id}',[RoleController::class,'delete'])->name('roles.delete');
+    // Buy
+    Route::get('/shopping', [BuyController::class, 'shopping'])->name('shopping.all')->middleware('permission:shopping.all');
+    Route::post('/buy', [BuyController::class, 'buy'])->name('buy')->middleware('permission:buy');
+    // Route::post('/products', [ProductController::class, 'store'])->name('products.store')->middleware('permission:products.store');
+    // Route::put('/products/{id}',[ProductController::class,'update'])->name('products.update')->middleware('permission:products.update');
+    // Route::delete('/products/{id}',[ProductController::class,'delete'])->name('products.delete')->middleware('permission:products.delete');
 
 });
 

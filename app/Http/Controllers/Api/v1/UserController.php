@@ -12,6 +12,7 @@ class UserController extends Controller
     public function users()
     {
         return User::getUsers();
+       
     }
 
     public function store(Request $request)

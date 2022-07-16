@@ -56,10 +56,17 @@ class User extends Authenticatable implements JWTSubject
     static public function getUsers()
     {
         $users = User::all();
+        
+        $data = [];
+
+        foreach ($users as $key => $value) {
+            $data[] = $value;
+            $data[$key]['rol'] = $value->roles()->pluck('name')->first();
+        }
 
         return response()->json([
             'success' => true,
-            'users' => $users
+            'users' => $data
         ], 200);
     }
 
@@ -88,9 +95,11 @@ class User extends Authenticatable implements JWTSubject
                 'password' => bcrypt($user['password']),
             ]);
 
+            $user->assignRole('Cliente');
+
             return response()->json([
                 'success' => true,
-                'user' => $user,
+                //'user' => $user->roles()->pluck('name')->first(),
                 'message' => 'El usuario ha sido creado satisfactoriamente.'
             ], 201);
         } catch (QueryException $e) {

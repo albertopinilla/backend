@@ -26,7 +26,11 @@ class RoleSeeder extends Seeder
         $vendedor->givePermissionTo('products.update');
         $vendedor->givePermissionTo('products.delete');
 
-        $role = Role::create(['name' => 'Cliente']);
+        $cliente = Role::create(['name' => 'Cliente']);
+        $cliente->givePermissionTo('products.all');
+        $cliente->givePermissionTo('shopping.all');
+        $cliente->givePermissionTo('buy');
+        
 
         
     }
