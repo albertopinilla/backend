@@ -67,8 +67,10 @@ class UserController extends Controller
             'email' => 'required|email|unique:users,email,' . $id,
             'password' => 'required|min:6',
             'password_confirmation' => 'required_with:password|same:password|min:6',
-            'role_id' => 'integer|digits:1|not_in:0|nullable'
+            //'role_id' => 'integer|digits:1|not_in:0|nullable'
+            'role_id' => 'required|array'
         ]);
+        
 
         if ($validator->fails()) {
             return response()->json([
@@ -87,7 +89,8 @@ class UserController extends Controller
                 'password' => bcrypt($data['password']),
             ]);
 
-            $user->assignRole($data['role_id']);
+            //$user->assignRole($data['role_id']);
+            $user->syncRoles($data['role_id']);
 
             return response()->json([
                 'success' => true,
@@ -98,7 +101,7 @@ class UserController extends Controller
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Recurso no encontrado'
+                'message' => 'Ha ocurrido un error con la actualización del usuario.'
             ], 404);
         }
     }

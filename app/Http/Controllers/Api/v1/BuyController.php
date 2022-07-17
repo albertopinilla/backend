@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api\v1;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use DB, Validator;
-use App\Models\Product;
+use App\Models\{Product, Sale};
 use Carbon\Carbon;
 
 class BuyController extends Controller
@@ -17,7 +17,7 @@ class BuyController extends Controller
             ->join('users', 'sales.user_id', '=', 'users.id')
             ->join('details', 'sales.id', '=', 'details.sale_id')
             ->join('products', 'details.product_id', '=', 'products.id')
-            ->selectRaw('sales.id,users.name as client, products.reference,products.name,details.unit_value,details.amount,details.total,
+            ->selectRaw('sales.id,products.id as product_id,users.name as client, products.reference,products.name,details.unit_value,details.amount,details.total,
                 (
                     SELECT SUM(details.total) FROM details WHERE details.sale_id = sales.id
                 ) as total_invoce,
@@ -31,6 +31,7 @@ class BuyController extends Controller
         foreach ($data as $key => $arg) {
 
             $tmp[$arg->id]['items'][] = [
+                'id' => $arg->product_id,
                 'reference' => $arg->reference,
                 'name' => $arg->name,
                 'amount' => $arg->amount,
@@ -56,7 +57,7 @@ class BuyController extends Controller
             ], 200);
         } else {
             return response()->json([
-                'message' => 'No se han registrado compras.',
+                'message' => 'No se han realizado compras.',
             ], 200);
         }
     }
@@ -105,32 +106,176 @@ class BuyController extends Controller
 
         $data = [];
 
-        foreach ($request->all() as $key => $value) {
+        $this->registerBuy($request->all(),$sal_id);
 
-            $data[] = $value;
-            $data[$key]['sale_id'] = $sal_id;
-
-            $unit_value = $this->getPrice($value['product_id']);
-
-            $data[$key]['unit_value'] = $unit_value;
-            $data[$key]['total'] = ($unit_value * $value['amount']);
-        }
-
-        DB::table('details')->insert($data);
         return response()->json([
             'success' => true,
             'message' => 'La compra ha sido realizada satisfactoriamente.'
         ], 422);
     }
 
-    public function getPrice($id)
+    public function update(Request $request, $id)
+    {
+        
+
+        // Validación de request
+        $validator = Validator::make($request->all(), [
+            '*.product_id' => 'required|integer|not_in:0|regex:/^\d+$/',
+            '*.amount' => 'required|integer|not_in:0|regex:/^\d+$/|regex:/^[0-9]+$/',
+        ]);
+
+        // Mostrar errores de validación
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        
+
+        $products_old = DB::table('details')
+            ->where('sale_id', $id)
+            ->get();
+
+        //return $products_old;
+        // Validación de la existencia del ID de cada producto y el Stock disponible
+        foreach ($request->all() as $key => $value) {
+
+            try {
+                $product_id = Product::FindOrFail($value['product_id']);
+            } catch (\Exception $e) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'El id del producto seleccionado no existe.',
+                    'error' => $e->getMessage()
+                ], 404);
+            }
+
+            foreach ($products_old as $key => $val) {
+                if($val->product_id === $value['product_id'])
+                {
+                    if (!$this->validateStock($product_id->id, ($value['amount']-$val->amount))) {
+                        
+                        return response()->json([
+                            'success' => false,
+                            'message' => 'La cantidad seleccionada es mayor al stock del producto, no es posible hacer la compra.'
+                        ], 422);
+                    }
+                }else{
+                    if (!$this->validateStock($product_id->id, $value['amount'])) {
+                        return response()->json([
+                            'success' => false,
+                            'message' => 'La cantidad seleccionada es mayor al stock del producto, no es posible hacer la compra.'
+                        ], 422);
+                    }
+                }
+            }
+
+            
+        }
+
+        // Validación de la existencia del ID de la compra
+        try {
+            $purchase_id = Sale::FindOrFail($id);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'El id de la compra seleccionada no existe.',
+                'error' => $e->getMessage()
+            ], 404);
+        }
+
+        if (!$this->userPurchase($id)) {
+            return response()->json([
+                'message' => 'El usuario autenticado no ha realizado esta compra.',
+            ], 404);
+        }
+
+        // Devuelve los productos de la compra al stock
+        $this->returnStock($id);
+        
+        // Crear nuevamente la compra
+        $this->registerBuy($request->all(),$id);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'La compra ha sido actualizada satisfactoriamente.'
+        ], 422);
+        
+    }
+
+    private function registerBuy($items,$id)
+    {
+        $data = [];
+
+        foreach ($items as $key => $value) {
+
+            $data[$key]['product_id'] = $value['product_id'];
+            $data[$key]['sale_id'] = $id;
+            $data[$key]['amount'] = $value['amount'];
+            $unit_value = $this->getPrice($value['product_id']);
+            $data[$key]['unit_value'] = $unit_value;
+            $data[$key]['total'] = ($unit_value * $value['amount']);
+
+            $this->discountStock($value['product_id'], $value['amount']);
+        }
+
+        DB::table('details')->insert($data);
+    }
+
+    // Retorna los productos de una compra a su Stock
+    private function returnStock($id)
+    {
+
+        $products = DB::table('details')
+            ->where('sale_id', $id)
+            ->get();
+
+        foreach ($products as $key => $value) {
+            //return "id ".$value->product_id. " stock ".$value->amount;
+            DB::table('products')
+                ->where('id', $value->product_id)
+                ->increment('stock', $value->amount);
+        }
+
+        DB::table('details')
+            ->where('sale_id', $id)
+            ->delete();
+    }
+
+    // Valida que la compra halla sido hecha por el usuario autenticado
+    private function userPurchase($id)
+    {
+        if (
+            DB::table('sales')->where('user_id', auth()->user()->id)
+            ->where('sales.id', $id)
+            ->join('details', 'sales.id', '=', 'details.sale_id')
+            ->exists()
+        ) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    // Descuenta una cantidad del stock
+    private function discountStock($id, $amount)
+    {
+        DB::table('products')
+            ->where('id', $id)
+            ->decrement('stock', $amount);
+    }
+
+    // Devuelve el precio de un producto
+    private function getPrice($id)
     {
         $price = DB::table('products')->where('id', $id)->value('price');
         return $price;
     }
 
     // Valida el stock del producto
-    public function validateStock($id, $amount): bool
+    private function validateStock($id, $amount): bool
     {
         if (Product::where('id', $id)->where('stock', '>=', $amount)->exists()) {
             return true;

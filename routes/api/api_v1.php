@@ -23,26 +23,22 @@ use App\Http\Controllers\Api\v1\{AuthController,UserController,RoleController,Pr
 Route::post('/auth/login', [AuthController::class, 'login']);
 Route::post('/auth/logout', [AuthController::class,'logout']);
 
-// Grupo Administrador
-Route::middleware(['auth.api','role:Administrador','jwt.auth'])->group(function () {    
+// Grupo Administrador 'role:Administrador'
+Route::middleware(['auth.api','jwt.auth'])->group(function () {    
 
     // Users
-    Route::get('/users', [UserController::class, 'users'])->name('users.all');
-    Route::get('/users/{id}', [UserController::class, 'show'])->name('users.show');
-    Route::post('/users', [UserController::class, 'store'])->name('users.store'); 
-    Route::put('/users/{id}',[UserController::class,'update'])->name('users.update');
-    Route::delete('/users/{id}',[UserController::class,'delete'])->name('users.delete');
+    Route::get('/users', [UserController::class, 'users'])->name('users.all')->middleware('permission:users.all');
+    Route::get('/users/{id}', [UserController::class, 'show'])->name('users.show')->middleware('permission:users.show');
+    Route::post('/users', [UserController::class, 'store'])->name('users.store')->middleware('permission:users.store');
+    Route::put('/users/{id}',[UserController::class,'update'])->name('users.update')->middleware('permission:users.update');
+    Route::delete('/users/{id}',[UserController::class,'delete'])->name('users.delete')->middleware('permission:users.delete');
 
-    // Permissions
-    Route::get('/roles', [RoleController::class, 'roles'])->name('roles.all');
-    Route::get('/roles/{id}', [RoleController::class, 'show'])->name('roles.show');
-    Route::post('/roles', [RoleController::class, 'store'])->name('roles.store'); 
-    Route::put('/roles/{id}',[RoleController::class,'update'])->name('roles.update');
-    Route::delete('/roles/{id}',[RoleController::class,'delete'])->name('roles.delete');
-
-});
-
-Route::middleware(['auth.api','jwt.auth'])->group(function () {    
+    // Roles
+    Route::get('/roles', [RoleController::class, 'roles'])->name('roles.all')->middleware('permission:roles.all');
+    Route::get('/roles/{id}', [RoleController::class, 'show'])->name('roles.show')->middleware('permission:roles.show');
+    Route::post('/roles', [RoleController::class, 'store'])->name('roles.store')->middleware('permission:roles.store'); 
+    Route::put('/roles/{id}',[RoleController::class,'update'])->name('roles.update')->middleware('permission:roles.update');
+    Route::delete('/roles/{id}',[RoleController::class,'delete'])->name('roles.delete')->middleware('permission:roles.delete');
 
     // Product
     Route::get('/products', [ProductController::class, 'products'])->name('products.all')->middleware('permission:products.all');
@@ -54,6 +50,13 @@ Route::middleware(['auth.api','jwt.auth'])->group(function () {
     // Buy
     Route::get('/shopping', [BuyController::class, 'shopping'])->name('shopping.all')->middleware('permission:shopping.all');
     Route::post('/buy', [BuyController::class, 'buy'])->name('buy')->middleware('permission:buy');
+    Route::put('/buy/{id}',[BuyController::class,'update'])->name('buy.update')->middleware('permission:buy.update');
+
+});
+
+Route::middleware(['auth.api','jwt.auth'])->group(function () {    
+
+    
     // Route::post('/products', [ProductController::class, 'store'])->name('products.store')->middleware('permission:products.store');
     // Route::put('/products/{id}',[ProductController::class,'update'])->name('products.update')->middleware('permission:products.update');
     // Route::delete('/products/{id}',[ProductController::class,'delete'])->name('products.delete')->middleware('permission:products.delete');

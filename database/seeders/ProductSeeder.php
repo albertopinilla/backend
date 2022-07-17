@@ -21,7 +21,9 @@ class ProductSeeder extends Seeder
                 "price" => "5800",
                 "weight" => "1",
                 "category" => "Bocadillos y Sándwiches",
-                "stock" => "45"
+                "stock" => "45",
+                "created_at" =>  date('Y-m-d H:i:s'),
+                "updated_at" => date('Y-m-d H:i:s')
             ],
             [
                 "name" => "Sándwich de Jamón y queso",
@@ -29,7 +31,9 @@ class ProductSeeder extends Seeder
                 "price" => "5500",
                 "weight" => "1",
                 "category" => "Bocadillos y Sándwiches",
-                "stock" => "50"
+                "stock" => "50",
+                "created_at" =>  date('Y-m-d H:i:s'),
+                "updated_at" => date('Y-m-d H:i:s')
             ],
             [
                 "name" => "Sándwich Vegetal con queso",
@@ -37,7 +41,9 @@ class ProductSeeder extends Seeder
                 "price" => "5000",
                 "weight" => "1",
                 "category" => "Bocadillos y Sándwiches",
-                "stock" => "50"
+                "stock" => "50",
+                "created_at" =>  date('Y-m-d H:i:s'),
+                "updated_at" => date('Y-m-d H:i:s')
             ],
             [
                 "name" => "Sandvitx Vegetal amb formatge",
@@ -45,7 +51,9 @@ class ProductSeeder extends Seeder
                 "price" => "5200",
                 "weight" => "1",
                 "category" => "Bocadillos y Sándwiches",
-                "stock" => "50"
+                "stock" => "50",
+                "created_at" =>  date('Y-m-d H:i:s'),
+                "updated_at" => date('Y-m-d H:i:s')
             ],
             [
                 "name" => "Galletas - Biscuits",
@@ -53,7 +61,9 @@ class ProductSeeder extends Seeder
                 "price" => "2200",
                 "weight" => "2",
                 "category" => "Snacks Dulces y Salados",
-                "stock" => "75"
+                "stock" => "75",
+                "created_at" =>  date('Y-m-d H:i:s'),
+                "updated_at" => date('Y-m-d H:i:s')
             ],
             [
                 "name" => "Maní Con Chocolate Manitoba 50G",
@@ -61,7 +71,9 @@ class ProductSeeder extends Seeder
                 "price" => "2200",
                 "weight" => "50",
                 "category" => "Snacks Dulces y Salados",
-                "stock" => "75"
+                "stock" => "75",
+                "created_at" =>  date('Y-m-d H:i:s'),
+                "updated_at" => date('Y-m-d H:i:s')
             ],
             [
                 "name" => "Maní Caramelizado Chocolate Del Alba 45G",
@@ -69,7 +81,9 @@ class ProductSeeder extends Seeder
                 "price" => "2950",
                 "weight" => "45",
                 "category" => "Snacks Dulces y Salados",
-                "stock" => "60"
+                "stock" => "60",
+                "created_at" =>  date('Y-m-d H:i:s'),
+                "updated_at" => date('Y-m-d H:i:s')
             ],
             [
                 "name" => "Fruta Liofilizada Frut Li Frut-002 Piña 16Gr",
@@ -77,7 +91,9 @@ class ProductSeeder extends Seeder
                 "price" => "2950",
                 "weight" => "50",
                 "category" => "Snacks Dulces y Salados",
-                "stock" => "65"
+                "stock" => "65",
+                "created_at" =>  date('Y-m-d H:i:s'),
+                "updated_at" => date('Y-m-d H:i:s')
             ],
             [
                 "name" => "Fruta Liofilizada Frut Li Frut-002 Piña 16Gr",
@@ -85,7 +101,9 @@ class ProductSeeder extends Seeder
                 "price" => "2950",
                 "weight" => "50",
                 "category" => "Snacks Dulces y Salados",
-                "stock" => "65"
+                "stock" => "65",
+                "created_at" =>  date('Y-m-d H:i:s'),
+                "updated_at" => date('Y-m-d H:i:s')
             ],
             [
                 "name" => "Café",
@@ -93,7 +111,9 @@ class ProductSeeder extends Seeder
                 "price" => "2650",
                 "weight" => "12",
                 "category" => "Cafés e Infusiones",
-                "stock" => "50"
+                "stock" => "50",
+                "created_at" =>  date('Y-m-d H:i:s'),
+                "updated_at" => date('Y-m-d H:i:s')
             ],
             [
                 "name" => "Café doble",
@@ -101,7 +121,9 @@ class ProductSeeder extends Seeder
                 "price" => "3800",
                 "weight" => "10",
                 "category" => "Cafés e Infusiones",
-                "stock" => "40"
+                "stock" => "40",
+                "created_at" =>  date('Y-m-d H:i:s'),
+                "updated_at" => date('Y-m-d H:i:s')
             ],
             [
                 "name" => "Café Capuccino",
@@ -109,7 +131,9 @@ class ProductSeeder extends Seeder
                 "price" => "3100",
                 "weight" => "10",
                 "category" => "Cafés e Infusiones",
-                "stock" => "95"
+                "stock" => "95",
+                "created_at" =>  date('Y-m-d H:i:s'),
+                "updated_at" => date('Y-m-d H:i:s')
             ],
             [
                 "name" => "Descafeinado",
@@ -117,7 +141,9 @@ class ProductSeeder extends Seeder
                 "price" => "2800",
                 "weight" => "10",
                 "category" => "Cafés e Infusiones",
-                "stock" => "92"
+                "stock" => "92",
+                "created_at" =>  date('Y-m-d H:i:s'),
+                "updated_at" => date('Y-m-d H:i:s')
             ],
             [
                 "name" => "Agua Mineral 50 cl",
@@ -125,7 +151,9 @@ class ProductSeeder extends Seeder
                 "price" => "2600",
                 "weight" => "50",
                 "category" => "Refrescos",
-                "stock" => "98"
+                "stock" => "98",
+                "created_at" =>  date('Y-m-d H:i:s'),
+                "updated_at" => date('Y-m-d H:i:s')
             ],
             [
                 "name" => "Agua Perrier con gas",
@@ -133,7 +161,9 @@ class ProductSeeder extends Seeder
                 "price" => "3100",
                 "weight" => "50",
                 "category" => "Refrescos",
-                "stock" => "20"
+                "stock" => "20",
+                "created_at" =>  date('Y-m-d H:i:s'),
+                "updated_at" => date('Y-m-d H:i:s')
             ],
             [
                 "name" => "Coca-ColA Zero",
@@ -141,7 +171,9 @@ class ProductSeeder extends Seeder
                 "price" => "3000",
                 "weight" => "33",
                 "category" => "Refrescos",
-                "stock" => "40"
+                "stock" => "40",
+                "created_at" =>  date('Y-m-d H:i:s'),
+                "updated_at" => date('Y-m-d H:i:s')
             ],
             [
                 "name" => "Bebida Energizante Red Bull Limitada 355ML",
@@ -149,7 +181,9 @@ class ProductSeeder extends Seeder
                 "price" => "7200",
                 "weight" => "30",
                 "category" => "Refrescos",
-                "stock" => "45"
+                "stock" => "45",
+                "created_at" =>  date('Y-m-d H:i:s'),
+                "updated_at" => date('Y-m-d H:i:s')
             ],
             [
                 "name" => "Bebida Energizante Monster X 473Ml Bluezero Lata",
@@ -157,7 +191,9 @@ class ProductSeeder extends Seeder
                 "price" => "6500",
                 "weight" => "30",
                 "category" => "Refrescos",
-                "stock" => "45"
+                "stock" => "45",
+                "created_at" =>  date('Y-m-d H:i:s'),
+                "updated_at" => date('Y-m-d H:i:s')
             ],
             [
                 "name" => "Bebida Hidratante Gatorade 500Ml",
@@ -165,7 +201,9 @@ class ProductSeeder extends Seeder
                 "price" => "3200",
                 "weight" => "1",
                 "category" => "Refrescos",
-                "stock" => "20"
+                "stock" => "20",
+                "created_at" =>  date('Y-m-d H:i:s'),
+                "updated_at" => date('Y-m-d H:i:s')
             ],
             [
                 "name" => "Lata Gaseosa Colombiana 269Ml",
@@ -173,7 +211,9 @@ class ProductSeeder extends Seeder
                 "price" => "3500",
                 "weight" => "10",
                 "category" => "Refrescos",
-                "stock" => "35"
+                "stock" => "35",
+                "created_at" =>  date('Y-m-d H:i:s'),
+                "updated_at" => date('Y-m-d H:i:s')
             ],
             [
                 "name" => "Coca Cola X 400 Ml",
@@ -181,7 +221,9 @@ class ProductSeeder extends Seeder
                 "price" => "2200",
                 "weight" => "10",
                 "category" => "Refrescos",
-                "stock" => "25"
+                "stock" => "25",
+                "created_at" =>  date('Y-m-d H:i:s'),
+                "updated_at" => date('Y-m-d H:i:s')
             ],
         ]);
     }

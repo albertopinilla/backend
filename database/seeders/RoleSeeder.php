@@ -20,16 +20,21 @@ class RoleSeeder extends Seeder
         $superadmin->givePermissionTo(Permission::all());
 
         $vendedor = Role::create(['name' => 'Vendedor']);
-        $vendedor->givePermissionTo('products.all');
-        $vendedor->givePermissionTo('products.show');
-        $vendedor->givePermissionTo('products.store');
-        $vendedor->givePermissionTo('products.update');
-        $vendedor->givePermissionTo('products.delete');
-
+        $vendedor->givePermissionTo([
+            'products.all',
+            'products.show',
+            'products.store',
+            'products.update',
+            'products.delete'
+        ]);
+       
         $cliente = Role::create(['name' => 'Cliente']);
-        $cliente->givePermissionTo('products.all');
-        $cliente->givePermissionTo('shopping.all');
-        $cliente->givePermissionTo('buy');
+        $cliente->givePermissionTo([
+            'products.all',
+            'shopping.all',
+            'buy',
+            'buy.update'
+        ]);
         
 
         
