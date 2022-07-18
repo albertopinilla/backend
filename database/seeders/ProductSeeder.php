@@ -141,7 +141,7 @@ class ProductSeeder extends Seeder
                 "price" => "2800",
                 "weight" => "10",
                 "category" => "Cafés e Infusiones",
-                "stock" => "92",
+                "stock" => "95",
                 "created_at" =>  date('Y-m-d H:i:s'),
                 "updated_at" => date('Y-m-d H:i:s')
             ],
@@ -151,7 +151,7 @@ class ProductSeeder extends Seeder
                 "price" => "2600",
                 "weight" => "50",
                 "category" => "Refrescos",
-                "stock" => "98",
+                "stock" => "100",
                 "created_at" =>  date('Y-m-d H:i:s'),
                 "updated_at" => date('Y-m-d H:i:s')
             ],

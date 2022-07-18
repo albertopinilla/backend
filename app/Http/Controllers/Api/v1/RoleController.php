@@ -25,8 +25,23 @@ class RoleController extends Controller
 
     public function update(Request $request, $id)
     {
-        $role = Role::find($id);
-        $role->syncPermissions($request->all());
+        
+        try {
+
+            $role = Role::findOrFail($id);
+            $role->syncPermissions($request->all());
+            return response()->json([
+                'success' => true,
+                'role' => $role,
+                'message' => 'El rol ha sido actualizado satisfactoriamente.'
+
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Recurso no encontrado'
+            ], 404);
+        }
     }
 
     public function delete($id)
