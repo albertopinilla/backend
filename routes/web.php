@@ -17,9 +17,9 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
-Route::fallback(function () {
-    return response()->json([
-        'success' => false,
-        'message' => 'Recurso no encontrado',
-    ], 404);
-});
+// Route::fallback(function () {
+//     return response()->json([
+//         'success' => false,
+//         'message' => 'Recurso no encontrado',
+//     ], 404);
+// });

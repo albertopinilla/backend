@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use DB, Validator;
 use App\Models\{Product, Sale};
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 
 class BuyController extends Controller
 {
@@ -139,6 +140,19 @@ class BuyController extends Controller
                 'message' => 'El usuario autenticado no ha realizado esta compra.',
             ], 404);
         }
+
+        // Valida que en el request no vengan ID de productos repetidos
+        $test = collect($request->all());
+        
+        $t = $test->duplicates('product_id');
+
+        if(count($t) > 0)
+        {
+            return response()->json([
+                'message' => 'El ID del producto se encuentra más de una vez',
+            ], 404);
+        }
+        
 
         // Validación de la existencia del ID de la compra
         try {
@@ -282,6 +296,19 @@ class BuyController extends Controller
         DB::table('products')
             ->where('id', $id)
             ->decrement('stock', $amount);
+
+        $this->validateStockBuy($id);
+    }
+
+    private function validateStockBuy($id)
+    {
+        $data = DB::table('products')
+            ->where('id', $id)->value('stock');
+
+        if($data <= 5)
+        {
+            Log::debug('Cantidad del producto menor a 5');
+        }    
     }
 
     // Devuelve el precio de un producto

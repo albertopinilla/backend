@@ -66,12 +66,12 @@ Route::middleware(['auth.api','jwt.auth'])->group(function () {
 
 });
 
-Route::fallback(function () {
-    return response()->json([
-        'success' => false,
-        'message' => 'Recurso no encontrado',
-    ], 404);
-});
+// Route::fallback(function () {
+//     return response()->json([
+//         'success' => false,
+//         'message' => 'Recurso no encontrado',
+//     ], 404);
+// });
     
     
 
