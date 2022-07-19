@@ -12,6 +12,7 @@ return [
     | any other location as required by the application or its packages.
     |
     */
+    'time_alert_stock' => env('ALERT_MIN_PRODUCT', false),
 
     'name' => env('APP_NAME', 'Laravel'),
 
