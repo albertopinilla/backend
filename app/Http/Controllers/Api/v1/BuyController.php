@@ -290,13 +290,13 @@ class BuyController extends Controller
             $emails = User::role(['Administrador','Vendedor'])->pluck('email');
             
         
-            EmailAlertSotck::dispatch( config('mail.from.name'), config('mail.from.address'),$data);
+            //EmailAlertSotck::dispatch( config('mail.from.name'), config('mail.from.address'),$data);
 
-            // foreach ($emails as $key => $email) {
+            foreach ($emails as $key => $email) {
 
-            //     EmailAlertSotck::dispatch( config('mail.from.name'), $email,$data);
+                EmailAlertSotck::dispatch( config('mail.from.name'), $email,$data);
 
-            // }
+            }
         }
     }
 
