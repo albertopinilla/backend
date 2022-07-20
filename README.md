@@ -6,7 +6,7 @@ Composer
 
 PHP 7.4.3 o superior 
 
-MySQL
+MySQL 8.0.22
 
 Especificaciones
 
