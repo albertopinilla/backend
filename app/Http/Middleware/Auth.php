@@ -18,7 +18,7 @@ class Auth
             ], 404);
         }
       
-        if(!$request->user()->can($request->route()->action['as'])){
+        if(!$user = auth()->user()->can($request->route()->action['as'])){
             return response()->json([
                 'success' => false,
                 'message'=>'No autorizado'

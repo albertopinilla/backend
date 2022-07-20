@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 use App\Jobs\EmailAlertSotck;
 use Illuminate\Support\Facades\App;
+use App\Models\User;
 
 class BuyController extends Controller
 {
@@ -197,7 +198,7 @@ class BuyController extends Controller
         ], 200);
     }
 
-
+    
     public function validateProductDuplicate($data)
     {
         $test = collect($data);
@@ -286,7 +287,16 @@ class BuyController extends Controller
             ->where('id', $id)->get();
 
         if ($data[0]->stock <= config('app.time_alert_stock')) {
-            EmailAlertSotck::dispatch('Notificación Stock', 'info@info.com',$data);
+            $emails = User::role(['Administrador','Vendedor'])->pluck('email');
+            
+        
+            EmailAlertSotck::dispatch( config('mail.from.name'), config('mail.from.address'),$data);
+
+            // foreach ($emails as $key => $email) {
+
+            //     EmailAlertSotck::dispatch( config('mail.from.name'), $email,$data);
+
+            // }
         }
     }
 

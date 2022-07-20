@@ -36,5 +36,7 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'buy']);
         Permission::create(['name' => 'buy.update']);
 
+        Permission::create(['name' => 'sales.all']);
+
     }
 }

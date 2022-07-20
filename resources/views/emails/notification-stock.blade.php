@@ -19,7 +19,7 @@
          }
          td {
          border: 1px solid #ccc;
-         text-align: left;
+         text-align: center;
          vertical-align: top;
          font-size: 14px;
          }
@@ -33,12 +33,12 @@
     <p>El límite mínimo establecido de stock por producto ha llegado a su umbral.</p>
     <table width="640" cellspacing="0" cellpadding="0" border="0" align="center" style="width:100%;">
         <tr>
-            <td>Referencia</td>
-            <td>Nombre</td>
-            <td>Categoria</td>
-            <td>Fecha de creación</td>
-            <td>Última actualización</td>
-            <td>Stock</td>
+            <th>Referencia</th>
+            <th>Nombre</th>
+            <th>Categoria</th>
+            <th>Fecha de creación</th>
+            <th>Última actualización</th>
+            <th>Stock</th>
         </tr>
         <tr>
         @foreach ($data as $value )

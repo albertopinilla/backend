@@ -17,9 +17,11 @@ class RoleSeeder extends Seeder
     {
       
         $superadmin = Role::create(['name' => 'Administrador']);
+
         $superadmin->givePermissionTo(Permission::all());
 
         $vendedor = Role::create(['name' => 'Vendedor']);
+
         $vendedor->givePermissionTo([
             'products.all',
             'products.show',
@@ -29,14 +31,13 @@ class RoleSeeder extends Seeder
         ]);
        
         $cliente = Role::create(['name' => 'Cliente']);
+
         $cliente->givePermissionTo([
             'products.all',
             'shopping.all',
             'buy',
             'buy.update'
         ]);
-        
-
-        
+    
     }
 }

@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\v1\{AuthController,UserController,RoleController,ProductController,BuyController};
+use App\Http\Controllers\Api\v1\{AuthController,UserController,RoleController,ProductController,BuyController,SaleController};
 
 
 /*
@@ -55,14 +55,8 @@ Route::middleware(['auth.api','jwt.auth'])->group(function () {
     Route::post('/buy', [BuyController::class, 'buy'])->name('buy')->middleware('permission:buy');
     Route::put('/buy/{id}',[BuyController::class,'update'])->name('buy.update')->middleware('permission:buy.update');
 
-});
-
-Route::middleware(['auth.api','jwt.auth'])->group(function () {    
-
-    
-    // Route::post('/products', [ProductController::class, 'store'])->name('products.store')->middleware('permission:products.store');
-    // Route::put('/products/{id}',[ProductController::class,'update'])->name('products.update')->middleware('permission:products.update');
-    // Route::delete('/products/{id}',[ProductController::class,'delete'])->name('products.delete')->middleware('permission:products.delete');
+    // Sales
+    Route::get('/sales', [SaleController::class, 'sales'])->name('sales.all')->middleware('permission:sales.all');
 
 });
 
