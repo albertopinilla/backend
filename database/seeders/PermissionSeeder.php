@@ -32,11 +32,11 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'products.update']);
         Permission::create(['name' => 'products.delete']);
 
+        Permission::create(['name' => 'sales.all']);
+
         Permission::create(['name' => 'shopping.all']);
         Permission::create(['name' => 'buy']);
         Permission::create(['name' => 'buy.update']);
-
-        Permission::create(['name' => 'sales.all']);
 
     }
 }

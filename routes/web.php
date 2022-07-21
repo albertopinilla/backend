@@ -13,21 +13,10 @@ use Illuminate\Support\Facades\Artisan;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
 
-// Route::fallback(function () {
-//     return response()->json([
-//         'success' => false,
-//         'message' => 'Recurso no encontrado',
-//     ], 404);
-// });
-
-
-Route::get('/clear-cache', function () {
-    echo Artisan::call('config:clear');
-    echo Artisan::call('config:cache');
-    echo Artisan::call('cache:clear');
-    echo Artisan::call('route:clear');
- });
+Route::any('{any}', function(){
+    return response()->json([
+        'status'    => false,
+        'message'   => 'Recurso no encontrado.',
+    ], 404);
+})->where('any', '.*');

@@ -7,17 +7,18 @@ use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 class Kernel extends ConsoleKernel
 {
-    /**
-     * Define the application's command schedule.
-     *
-     * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
-     * @return void
-     */
+    
+    protected $commands = [
+        'App\Console\Commands\NitificationAlertSotck',
+    ];
+
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+        $schedule->command('notification:stock')->cron('00 12 * * *');
+        $schedule->command('notification:stock')->cron('00 18 * * *');
+        
     }
-
+    
     /**
      * Register the commands for the application.
      *

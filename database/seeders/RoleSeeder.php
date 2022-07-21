@@ -18,7 +18,24 @@ class RoleSeeder extends Seeder
       
         $superadmin = Role::create(['name' => 'Administrador']);
 
-        $superadmin->givePermissionTo(Permission::all());
+        $superadmin->givePermissionTo([
+            'users.all',
+            'users.show',
+            'users.store',
+            'users.update',
+            'users.delete',
+            'roles.all',
+            'roles.show',
+            'roles.store',
+            'roles.update',
+            'roles.delete',
+            'products.all',
+            'products.show',
+            'products.store',
+            'products.update',
+            'products.delete',
+            'sales.all',
+        ]);
 
         $vendedor = Role::create(['name' => 'Vendedor']);
 

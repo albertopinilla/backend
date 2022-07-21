@@ -40,16 +40,18 @@
             <th>Última actualización</th>
             <th>Stock</th>
         </tr>
-        <tr>
+        
         @foreach ($data as $value )
+        <tr>
             <td>{{ $value->reference }}</td>
             <td>{{ $value->name }}</td>
             <td>{{ $value->category }}</td>
             <td>{{ $value->created_at }}</td>
             <td>{{ $value->updated_at }}</td>
             <td>{{ $value->stock }}</td>
-        @endforeach
         </tr>
+        @endforeach
+        
     </table>
 </body>
 </html>

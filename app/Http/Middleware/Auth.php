@@ -17,7 +17,7 @@ class Auth
                 'message'=>'No autenticado'
             ], 404);
         }
-      
+        
         if(!$user = auth()->user()->can($request->route()->action['as'])){
             return response()->json([
                 'success' => false,

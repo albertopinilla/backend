@@ -72,24 +72,5 @@ class AuthController extends Controller
                 'message' => 'Error al cerrar la sesión, por favor inténtalo de nuevo.'
             ], 422);
         }
-
-
-        // Pass true to force the token to be blacklisted "forever"
-        //auth()->logout(true);
-
-        // $token = JWTAuth::getToken();
-
-        // try {
-        //     $token = JWTAuth::invalidate($token);
-        //     return response()->json([
-        //         'success' => true,
-        //         'message' => "Has terminado tu sesion satisfactoriamente."
-        //     ], 200);
-        // } catch (JWTException $e) {
-        //     return response()->json([
-        //         'success' => false,
-        //         'message' => 'Error al cerrar la sesión, por favor inténtalo de nuevo.'
-        //     ], 422);
-        // }
     }
 }
