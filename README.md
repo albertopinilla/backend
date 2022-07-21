@@ -5,6 +5,7 @@ PHP 7.4.3 o superior
 MySQL 8.0.22 o superior
 Especificaciones
 Laravel 8.83.19
+
 Instalación
 git clone https://github.com/albertopinilla/backend.git
 cd backend
