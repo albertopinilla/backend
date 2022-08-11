@@ -46,7 +46,7 @@ class ProductSeeder extends Seeder
                 "updated_at" => date('Y-m-d H:i:s')
             ],
             [
-                "name" => "Sandvitx Vegetal amb formatge",
+                "name" => "Sándwich Vegetal amb formatge",
                 "reference" => "178964",
                 "price" => "5200",
                 "weight" => "1",

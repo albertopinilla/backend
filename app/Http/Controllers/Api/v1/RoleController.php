@@ -15,33 +15,50 @@ class RoleController extends Controller
 
         return response()->json([
             'success' => true,
-            'users' => $roles
+            'roles' => $roles
         ], 200);
+    }
+
+    public function show($id)
+    {
+        try {
+
+            $user = Role::FindOrFail($id);
+            return response()->json([
+                'success' => true,
+                'role' => $user
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Recurso no encontrado'
+            ], 404);
+        }
     }
 
     public function store(Request $request)
     {
         $data = $request->only('name');
-        
+
         $validator = Validator::make($data, [
             'name'  => 'required|unique:roles',
-           
+
         ]);
-        
+
         if ($validator->fails()) {
             return response()->json([
                 'success' => false,
                 'errors' => $validator->errors()
             ], 422);
         }
-        
-        
+
+
         try {
 
             Role::create([
                 'name' => $request->name
             ]);
-            
+
             return response()->json([
                 'success' => true,
                 'message' => 'El rol ha sido creado satisfactoriamente.'
@@ -57,7 +74,7 @@ class RoleController extends Controller
 
     public function update(Request $request, $id)
     {
-        
+
         try {
 
             $role = Role::findOrFail($id);
@@ -78,12 +95,11 @@ class RoleController extends Controller
 
     public function delete($id)
     {
-       
-        
+
         try {
 
-            $role = Role::findOrFail($id); 
-            
+            $role = Role::findOrFail($id);
+
             $role->delete();
             return response()->json([
                 'success' => true,
@@ -98,5 +114,4 @@ class RoleController extends Controller
             ], 404);
         }
     }
-
 }

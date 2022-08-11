@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use DateTimeInterface;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
+use Illuminate\Database\QueryException;
 
 class Product extends Model
 {
@@ -26,14 +26,26 @@ class Product extends Model
         return $date->format('Y-m-d H:i:s');
     }
 
-    static public function getProducts()
+    static public function getProducts($request)
     {
-        $products = Product::all();
+        $products = Product::query();
 
-        return response()->json([
-            'success' => true,
-            'products' => $products
-        ], 200);
+        
+        $perPage = 10;
+        $page = $request->input('page', 1);;
+        $total = $products->count();
+
+        $result = $products->offset(($page - 1) * $perPage)->limit($perPage)->get();
+
+        return [
+            'page' => $page,
+            'per_page' => $perPage,
+            'total' => $total,
+            
+            'total_pages' => ceil($total / $perPage),
+            'data' => $result,
+        ];
+     
     }
 
     static public function getProduct($id)

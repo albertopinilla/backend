@@ -7,15 +7,14 @@ use Illuminate\Http\Request;
 use DB, Validator;
 use App\Models\{Product, Sale, Buy};
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Log;
 use App\Jobs\EmailAlertSotck;
-use Illuminate\Support\Facades\App;
 use App\Models\User;
 
 class BuyController extends Controller
 {
     public function shopping()
     {
+    
         $data = Buy::getShopping();
         if (count($data) > 0) {
             return response()->json([
@@ -30,13 +29,13 @@ class BuyController extends Controller
 
     public function buy(Request $request)
     {
-
+        
         $validator = Validator::make($request->all(), [
             '*.product_id' => 'required|integer|not_in:0|regex:/^\d+$/',
             '*.amount' => 'required|integer|not_in:0|regex:/^\d+$/|regex:/^[0-9]+$/'
 
         ]);
-
+        
         if ($validator->fails()) {
             return response()->json([
                 'success' => false,
@@ -50,7 +49,7 @@ class BuyController extends Controller
                 'message' => 'El ID del producto se encuentra más de una vez',
             ], 404);
         }
-
+        
         foreach ($request->all() as $key => $value) {
 
             try {
@@ -70,7 +69,7 @@ class BuyController extends Controller
                 ], 422);
             }
         }
-
+        
         $sal_id = DB::table('sales')->insertGetId([
             'user_id' => auth()->user()->id,
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
@@ -78,11 +77,11 @@ class BuyController extends Controller
         ]);
 
         $this->registerBuy($request->all(), $sal_id);
-
+        
         return response()->json([
             'success' => true,
             'message' => 'La compra ha sido realizada satisfactoriamente.'
-        ], 422);
+        ], 200);
     }
 
     public function update(Request $request, $id)

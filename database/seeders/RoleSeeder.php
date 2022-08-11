@@ -51,6 +51,7 @@ class RoleSeeder extends Seeder
 
         $cliente->givePermissionTo([
             'products.all',
+            'products.show',
             'shopping.all',
             'buy',
             'buy.update'

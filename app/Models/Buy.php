@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use DB;
+use Auth;
 
 class Buy extends Model
 {
@@ -12,6 +13,7 @@ class Buy extends Model
 
     public static function getShopping()
     {
+              
         $data = DB::table('sales')
             ->where('user_id', auth()->user()->id)
             ->join('users', 'sales.user_id', '=', 'users.id')
@@ -23,6 +25,7 @@ class Buy extends Model
                 ) as total_invoce,
                 sales.created_at,
                 sales.updated_at')
+                ->orderBy('id','DESC')
             ->get();
 
         $tmp = [];
@@ -43,6 +46,7 @@ class Buy extends Model
             if ($invoce != $arg->id || $invoce == null) {
 
                 $tmp[$arg->id]['resume'] = [
+                    'id' => $arg->id,
                     'client' => $arg->client,
                     'total_invoice' => '$' . $arg->total_invoce,
                     'date_invoice' => $arg->created_at,
@@ -53,6 +57,6 @@ class Buy extends Model
             $invoce =   $arg->id;
         }
 
-        return $tmp;
+        return array_slice($tmp,false);
     }
 }

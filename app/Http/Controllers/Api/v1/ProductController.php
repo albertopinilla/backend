@@ -6,13 +6,15 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use Validator;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 
 
 class ProductController extends Controller
 {
     public function products(Request $request)
     {
-        return Product::getProducts();
+        return Product::getProducts($request);
     }
 
     public function store(Request $request)

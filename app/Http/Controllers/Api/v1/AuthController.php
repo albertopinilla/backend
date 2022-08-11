@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Auth;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Carbon\Carbon;
 
+
+
 class AuthController extends Controller
 {
     public function login(Request $request)
@@ -42,9 +44,11 @@ class AuthController extends Controller
 
             return response()->json([
                 'success' => true,
-                'user' => auth()->user(),
+                'name' => auth()->user()->name,
+                'email' => auth()->user()->email,
                 'expires_in' => auth()->factory()->getTTL(),
                 'end' => Carbon::now()->addMinutes(auth()->factory()->getTTL())->format('Y-m-d H:i:s'),
+                'roles' => Auth::user()->getRoleNames(),
                 'token' => $token,
 
             ], 200);
@@ -60,6 +64,7 @@ class AuthController extends Controller
 
     public function logout()
     {
+        
         try {
             auth()->logout();
             return response()->json([

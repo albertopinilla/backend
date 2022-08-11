@@ -15,14 +15,14 @@ class Auth
             return response()->json([
                 'success' => false,
                 'message'=>'No autenticado'
-            ], 404);
+            ], 401);
         }
         
         if(!$user = auth()->user()->can($request->route()->action['as'])){
             return response()->json([
                 'success' => false,
                 'message'=>'No autorizado'
-            ], 404);
+            ], 403);
         }
 
         return $next($request);

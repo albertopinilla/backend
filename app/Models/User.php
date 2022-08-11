@@ -11,6 +11,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 use DateTimeInterface;
 use Spatie\Permission\Traits\HasRoles;
 use Validator;
+use Auth;
 
 class User extends Authenticatable implements JWTSubject
 {
@@ -108,4 +109,6 @@ class User extends Authenticatable implements JWTSubject
             ], 500);
         }
     }
+
+   
 }

@@ -21,7 +21,9 @@ use App\Http\Controllers\Api\v1\{AuthController,UserController,RoleController,Pr
 // });
 
 Route::post('/auth/login', [AuthController::class, 'login']);
-Route::post('/auth/logout', [AuthController::class,'logout']);
+Route::post('/auth/logout', [AuthController::class,'logout'])->middleware('jwt.auth');
+Route::get('/products', [ProductController::class, 'products'])->name('products.all');
+Route::get('/products/{id}', [ProductController::class, 'show'])->name('products.show');
 
 // Grupo Administrador 'role:Administrador'
 Route::middleware(['auth.api','jwt.auth'])->group(function () {    
@@ -41,8 +43,9 @@ Route::middleware(['auth.api','jwt.auth'])->group(function () {
     Route::delete('/roles/{id}',[RoleController::class,'delete'])->name('roles.delete')->middleware('permission:roles.delete');
 
     // Product
-    Route::get('/products', [ProductController::class, 'products'])->name('products.all')->middleware('permission:products.all');
-    Route::get('/products/{id}', [ProductController::class, 'show'])->name('products.show')->middleware('permission:products.show');
+    
+   //Route::get('/products', [ProductController::class, 'products'])->name('products.all')->middleware('permission:products.all');
+    //Route::get('/products/{id}', [ProductController::class, 'show'])->name('products.show')->middleware('permission:products.show');
     Route::post('/products', [ProductController::class, 'store'])->name('products.store')->middleware('permission:products.store');
     Route::put('/products/{id}',[ProductController::class,'update'])->name('products.update')->middleware('permission:products.update');
     Route::delete('/products/{id}',[ProductController::class,'delete'])->name('products.delete')->middleware('permission:products.delete');
