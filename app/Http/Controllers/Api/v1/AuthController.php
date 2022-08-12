@@ -5,16 +5,9 @@ namespace App\Http\Controllers\Api\v1;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use JWTAuth;
-use JWTFactory;
 use Validator;
-use App\Models\User;
-use Tymon\JWTAuth\Exceptions\TokenBlacklistedException;
-use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 use Illuminate\Support\Facades\Auth;
-use Tymon\JWTAuth\Contracts\JWTSubject;
 use Carbon\Carbon;
-
-
 
 class AuthController extends Controller
 {
@@ -40,7 +33,12 @@ class AuthController extends Controller
         
 
      
-        if ($token = JWTAuth::attempt($credentials)) {
+        if (JWTAuth::attempt($credentials)) {
+
+            $token = auth('api')->claims([
+                'role' => auth()->user()->getRoleNames(),
+                'username' => auth()->user()->name
+            ])->login(auth()->user());
 
             return response()->json([
                 'success' => true,
@@ -58,7 +56,7 @@ class AuthController extends Controller
                 'code' => 2,
                 'message' => 'Credenciales incorrectas',
                 'errors' => $validator->errors()
-            ], 401);
+            ], 4011);
         }
     }
 
@@ -77,5 +75,16 @@ class AuthController extends Controller
                 'message' => 'Error al cerrar la sesión, por favor inténtalo de nuevo.'
             ], 422);
         }
+    }
+
+    public function me()
+    {
+        if(auth()->user())
+        {
+            return response()->json(['auth' => true]);
+        }else{
+            return response()->json(['auth' => false]);
+        }
+        
     }
 }

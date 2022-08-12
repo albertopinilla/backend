@@ -35,6 +35,9 @@ class RoleSeeder extends Seeder
             'products.update',
             'products.delete',
             'sales.all',
+
+            'auth.me',
+            'auth.logout'
         ]);
 
         $vendedor = Role::create(['name' => 'Vendedor']);
@@ -44,7 +47,10 @@ class RoleSeeder extends Seeder
             'products.show',
             'products.store',
             'products.update',
-            'products.delete'
+            'products.delete',
+
+            'auth.me',
+            'auth.logout'
         ]);
        
         $cliente = Role::create(['name' => 'Cliente']);
@@ -54,7 +60,10 @@ class RoleSeeder extends Seeder
             'products.show',
             'shopping.all',
             'buy',
-            'buy.update'
+            'buy.update',
+
+            'auth.me',
+            'auth.logout'
         ]);
     
     }

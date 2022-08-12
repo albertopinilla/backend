@@ -21,12 +21,18 @@ use App\Http\Controllers\Api\v1\{AuthController,UserController,RoleController,Pr
 // });
 
 Route::post('/auth/login', [AuthController::class, 'login']);
-Route::post('/auth/logout', [AuthController::class,'logout'])->middleware('jwt.auth');
+
 Route::get('/products', [ProductController::class, 'products'])->name('products.all');
 Route::get('/products/{id}', [ProductController::class, 'show'])->name('products.show');
 
+//Route::post('/auth/yo', [AuthController::class, 'me'])->middleware('jwt.auth');
+Route::post('/auth/auth', [AuthController::class, 'me'])->name('auth.me');
 // Grupo Administrador 'role:Administrador'
 Route::middleware(['auth.api','jwt.auth'])->group(function () {    
+
+    // Auth
+    //Route::post('/auth/auth', [AuthController::class, 'me'])->name('auth.me');
+    Route::post('/auth/logout', [AuthController::class,'logout'])->name('auth.logout');
 
     // Users
     Route::get('/users', [UserController::class, 'users'])->name('users.all')->middleware('permission:users.all');
