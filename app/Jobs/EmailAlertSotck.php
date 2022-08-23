@@ -33,7 +33,7 @@ class EmailAlertSotck implements ShouldQueue
      */
     public function handle()
     {
-        $email = new AlertSotck($this->title,$this->email,$this->data);
-        Mail::to($this->email)->send($email);
+        $email_alert = new AlertSotck($this->title,$this->email,$this->data);
+        Mail::to($this->email)->send($email_alert);
     }
 }

@@ -32,7 +32,7 @@ class Product extends Model
 
         
         $perPage = 10;
-        $page = $request->input('page', 1);;
+        $page = $request->input('page', 1);
         $total = $products->count();
 
         $result = $products->offset(($page - 1) * $perPage)->limit($perPage)->get();
@@ -68,15 +68,17 @@ class Product extends Model
     static public function saveProduct($request)
     {
         $data = $request->only('name', 'reference', 'price', 'weight','category','stock');
-        
+
+        $integer = 'required|integer';
+         
         $validator = Validator::make($data, [
 
             'name' => 'required',
             'reference'  => 'required|unique:products',
-            'price'  => 'required|integer', 
-            'weight'  => 'required|integer',
+            'price'  => $integer, 
+            'weight'  => $integer,
             'category'  => 'required',
-            'stock'  => 'required|integer',
+            'stock'  => $integer,
 
         ]);
 

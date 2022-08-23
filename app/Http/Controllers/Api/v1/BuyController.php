@@ -50,7 +50,7 @@ class BuyController extends Controller
             ], 404);
         }
         
-        foreach ($request->all() as $key => $value) {
+        foreach ($request->all() as  $value) {
 
             try {
                 $product_id = Product::FindOrFail($value['product_id']);
@@ -134,7 +134,7 @@ class BuyController extends Controller
         $data = [];
 
         // Validación de existencia de producto y disponibilidad de stock de compra anterior
-        foreach ($request->all() as $key => $value) {
+        foreach ($request->all() as $value) {
 
             try {
                 $product_id = Product::FindOrFail($value['product_id']);
@@ -146,7 +146,7 @@ class BuyController extends Controller
                 ], 404);
             }
 
-            foreach ($shopping_old as $k => $val) {
+            foreach ($shopping_old as $val) {
 
                 if ($value['product_id'] === $val->product_id) {
                     $data[] = $val->product_id;
@@ -167,7 +167,7 @@ class BuyController extends Controller
 
         $new = $collection->whereNotIn('product_id', $data);
 
-        foreach ($new  as $key => $value) {
+        foreach ($new  as $value) {
 
             if (!$this->validateStock($value['product_id'], ($value['amount']))) {
 
@@ -216,7 +216,7 @@ class BuyController extends Controller
     {
         $data = [];
 
-        foreach ($items as $key => $value) {
+        foreach ($items => $value) {
 
             $data[$key]['product_id'] = $value['product_id'];
             $data[$key]['sale_id'] = $id;
@@ -240,7 +240,7 @@ class BuyController extends Controller
             ->where('sale_id', $id)
             ->get();
 
-        foreach ($products as $key => $value) {
+        foreach ($products as $value) {
             //return "id ".$value->product_id. " stock ".$value->amount;
             DB::table('products')
                 ->where('id', $value->product_id)
@@ -291,7 +291,7 @@ class BuyController extends Controller
         
             //EmailAlertSotck::dispatch( config('mail.from.name'), config('mail.from.address'),$data);
 
-            foreach ($emails as $key => $email) {
+            foreach ($emails as $email) {
 
                 EmailAlertSotck::dispatch( config('mail.from.name'), $email,$data);
 

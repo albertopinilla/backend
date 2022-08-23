@@ -10,7 +10,7 @@ class Auth
    
     public function handle(Request $request, Closure $next)
     {
-        if(!$user = auth()->user())
+        if(!auth()->user())
         {
             return response()->json([
                 'success' => false,
@@ -18,7 +18,7 @@ class Auth
             ], 401);
         }
         
-        if(!$user = auth()->user()->can($request->route()->action['as'])){
+        if(!auth()->user()->can($request->route()->action['as'])){
             return response()->json([
                 'success' => false,
                 'message'=>'No autorizado'

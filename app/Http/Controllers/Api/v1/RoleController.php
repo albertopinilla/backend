@@ -9,6 +9,8 @@ use Validator;
 
 class RoleController extends Controller
 {
+    private $message = 'Recurso no encontrado';
+
     public function roles()
     {
         $roles = Role::all();
@@ -31,7 +33,7 @@ class RoleController extends Controller
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Recurso no encontrado'
+                'message' => $this->message
             ], 404);
         }
     }
@@ -67,7 +69,7 @@ class RoleController extends Controller
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Recurso no encontrado'
+                'message' => $this->message
             ], 404);
         }
     }
@@ -88,7 +90,7 @@ class RoleController extends Controller
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Recurso no encontrado'
+                'message' => $this->message
             ], 404);
         }
     }
@@ -110,7 +112,7 @@ class RoleController extends Controller
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Recurso no encontrado'
+                'message' => $this->message
             ], 404);
         }
     }

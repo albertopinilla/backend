@@ -22,7 +22,7 @@ class Sale extends Model
 
     static public function getSales()
     {
-        $data = DB::table('sales')
+        return DB::table('sales')
             
             ->join('users', 'sales.user_id', '=', 'users.id')
             ->join('details', 'sales.id', '=', 'details.sale_id')
@@ -44,7 +44,7 @@ class Sale extends Model
                 sales.updated_at')
                 ->orderBy('details.id', 'ASC')
             ->get();
-        return $data;
+    
     }
 
 }

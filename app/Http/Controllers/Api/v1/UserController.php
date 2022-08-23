@@ -89,7 +89,6 @@ class UserController extends Controller
                 'password' => bcrypt($data['password']),
             ]);
 
-            //$user->assignRole($data['role_id']);
             $user->syncRoles($data['role_id']);
 
             return response()->json([

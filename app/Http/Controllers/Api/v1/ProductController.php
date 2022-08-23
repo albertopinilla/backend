@@ -31,13 +31,15 @@ class ProductController extends Controller
     {
         $data = $request->only('name', 'reference', 'price', 'weight','category','stock');
 
+        $integer = 'required|integer';
+
         $validator = Validator::make($data, [
             'name' => 'required',
             'reference' => 'required|unique:products,reference,' . $id,
-            'price'  => 'required|integer', 
-            'weight'  => 'required|integer',
+            'price'  => $integer, 
+            'weight'  => $integer,
             'category'  => 'required',
-            'stock'  => 'required|integer',
+            'stock'  => $integer,
         ]);
 
         if ($validator->fails()) {

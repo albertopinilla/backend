@@ -31,14 +31,15 @@
     </head>
 <body>
     <p>El límite mínimo establecido de stock por producto ha llegado a su umbral.</p>
-    <table width="640" cellspacing="0" cellpadding="0" border="0" align="center" style="width:100%;">
+    <table style="width:100%; align:center;">
+        <caption>Contenido del mensaje</caption>
         <tr>
-            <th>Referencia</th>
-            <th>Nombre</th>
-            <th>Categoria</th>
-            <th>Fecha de creación</th>
-            <th>Última actualización</th>
-            <th>Stock</th>
+            <th scope="col">Referencia</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Categoria</th>
+            <th scope="col">Fecha de creación</th>
+            <th scope="col">Última actualización</th>
+            <th scope="col">Stock</th>
         </tr>
         
         @foreach ($data as $value )

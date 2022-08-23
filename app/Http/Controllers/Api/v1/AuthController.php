@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\v1;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use JWTAuth;
+use Tymon\JWTAuth\Exceptions\JWTException;
 use Validator;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;

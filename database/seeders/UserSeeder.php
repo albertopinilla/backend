@@ -9,29 +9,26 @@ use Spatie\Permission\Models\Permission;
 
 class UserSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
+    private $password = bcrypt('123456');
+
     public function run()
     {
         $admin = User::create([
             'name' => 'Administrator',
             'email' => 'admin@admin',
-            'password' => bcrypt('123456'),
+            'password' => $this->password,
         ]);
 
         $vendedor = User::create([
             'name' => 'Vendedor',
             'email' => 'vendedor@vendedor',
-            'password' => bcrypt('123456'),
+            'password' => $this->password,
         ]);
 
         $cliente = User::create([
             'name' => 'Cliente',
             'email' => 'cliente@cliente',
-            'password' => bcrypt('123456'),
+            'password' => $this->password,
         ]);
 
         $admin->assignRole('Administrador');

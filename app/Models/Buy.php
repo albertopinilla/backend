@@ -32,7 +32,7 @@ class Buy extends Model
 
         $invoce = null;
 
-        foreach ($data as $key => $arg) {
+        foreach ($data as $arg) {
 
             $tmp[$arg->id]['items'][] = [
                 'id' => $arg->product_id,
