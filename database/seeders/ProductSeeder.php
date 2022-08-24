@@ -10,10 +10,10 @@ class ProductSeeder extends Seeder
     private $date = date('Y-m-d H:i:s');
 
     // Categorias
-    $cat1 = 'Bocadillos y Sándwiches';
-    $cat2 = 'Snacks Dulces y Salados';
-    $cat3 = 'Cafés e Infusiones';
-    $cat4 = 'Refrescos';
+    private $cat1 = 'Bocadillos y Sándwiches';
+    private $cat2 = 'Snacks Dulces y Salados';
+    private $cat3 = 'Cafés e Infusiones';
+    private $cat4 = 'Refrescos';
 
     public function run()
     {

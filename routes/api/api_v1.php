@@ -4,15 +4,25 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\v1\{AuthController,UserController,RoleController,ProductController,BuyController,SaleController};
 
+class Api{
 
-$products_id = '/products/{id}';
-$users_id = '/users/{id}';
-$roles_id = '/roles/{id}';
+    private static $products_id;
+    private static $users_id;
+    private static $roles_id;
+
+    public function __construct()
+    {
+        $this->products_id = '/products/{id}';
+        $this->users_id = '/users/{id}';
+        $this->roles_id = '/roles/{id}';
+    }
+
+}
 
 Route::post('/auth/login', [AuthController::class, 'login']);
 
 Route::get('/products', [ProductController::class, 'products'])->name('products.all');
-Route::get($products_id, [ProductController::class, 'show'])->name('products.show');
+Route::get(Api::products_id, [ProductController::class, 'show'])->name('products.show');
 
 Route::post('/auth/auth', [AuthController::class, 'me'])->name('auth.me');
 

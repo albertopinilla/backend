@@ -216,7 +216,7 @@ class BuyController extends Controller
     {
         $data = [];
 
-        foreach ($items => $value) {
+        foreach ($items as $key => $value) {
 
             $data[$key]['product_id'] = $value['product_id'];
             $data[$key]['sale_id'] = $id;
@@ -241,7 +241,7 @@ class BuyController extends Controller
             ->get();
 
         foreach ($products as $value) {
-            //return "id ".$value->product_id. " stock ".$value->amount;
+
             DB::table('products')
                 ->where('id', $value->product_id)
                 ->increment('stock', $value->amount);
@@ -287,10 +287,7 @@ class BuyController extends Controller
 
         if ($data[0]->stock <= config('app.time_alert_stock')) {
             $emails = User::role(['Administrador','Vendedor'])->pluck('email');
-            
-        
-            //EmailAlertSotck::dispatch( config('mail.from.name'), config('mail.from.address'),$data);
-
+          
             foreach ($emails as $email) {
 
                 EmailAlertSotck::dispatch( config('mail.from.name'), $email,$data);

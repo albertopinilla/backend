@@ -9,8 +9,8 @@ use Spatie\Permission\Models\Permission;
 class RoleSeeder extends Seeder
 {
     
-    private $product_all = 'products.all';
-    private $product_show = 'products.show',
+    private $products_all = 'products.all';
+    private $product_show = 'products.show';
 
     public function run()
     {
