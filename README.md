@@ -1,3 +1,4 @@
+```
 Requisitos
 
 Git 
@@ -43,3 +44,4 @@ QUEUE_CONNECTION=database
 php artisan config:cache
 php artisan migrate --seed
 php artisan serve
+```
